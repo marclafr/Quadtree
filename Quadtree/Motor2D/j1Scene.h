@@ -6,6 +6,7 @@
 struct SDL_Texture;
 class GuiImage;
 class GuiText;
+class Quadtree;
 
 class j1Scene : public j1Module
 {
@@ -38,6 +39,9 @@ private:
 	SDL_Texture* debug_tex;
 	GuiImage* banner;
 	GuiText* text;
+
+	Quadtree* quadtree;
+
 };
 
 #endif // __j1SCENE_H__

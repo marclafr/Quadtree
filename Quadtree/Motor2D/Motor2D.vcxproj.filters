@@ -40,6 +40,9 @@
     <ClCompile Include="j1Textures.cpp">
       <Filter>Quadtree\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Quadtree\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -88,6 +91,9 @@
       <Filter>Quadtree\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Textures.h">
+      <Filter>Quadtree\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
       <Filter>Quadtree\Modules</Filter>
     </ClInclude>
   </ItemGroup>

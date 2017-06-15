@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Window.h"
+#include "Quadtree.h"
 #include "j1Scene.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -27,7 +28,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-
+	quadtree = new Quadtree({ 0, 0, App->win->GetWindowWidth(), App->win->GetWindowHeight() });
 	return true;
 }
 
@@ -41,6 +42,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	quadtree->DrawQuadtree();
 	return true;
 }
 

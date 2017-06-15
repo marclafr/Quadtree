@@ -36,6 +36,8 @@ public:
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
+	int GetWindowWidth();
+	int GetWindowHeight();
 
 private:
 	std::string	title;
