@@ -49,13 +49,11 @@ bool j1Scene::Update(float dt)
 		quadtree->PushBack(mouse_pos);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		Instert50Points();
-	}
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+		Instert50Points();	
 
 	quadtree->DrawQuadtree();
-	
+
 	return true;
 }
 
@@ -63,6 +61,13 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		quadtree->ResetQuadtree();
+		qt_divisions = 1;
+		quadtree = new Quadtree({ 0, 0, App->win->GetWindowWidth(), App->win->GetWindowHeight() });
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

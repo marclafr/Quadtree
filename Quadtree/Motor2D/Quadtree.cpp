@@ -8,6 +8,9 @@ QuadtreeNode::QuadtreeNode(SDL_Rect area, QuadtreeNode* parent) : area(area), pa
 {
 	for (int i = 0; i < CHILDS_NUM; i++)
 		childs[i] = nullptr;
+	for (int i = 0; i < MAX_ENTITIES; i++)
+		entities[i].SetToZero();
+
 }
 
 QuadtreeNode::~QuadtreeNode()
@@ -98,10 +101,7 @@ void QuadtreeNode::SubDivide(iPoint entity)
 
 	//Realocate all the points in the new quads
 	for (int i = 0; i < MAX_ENTITIES; i++)
-	{
 		PushToChild(entities[i]);
-		entities[i].SetToZero();
-	}
 
 	//Allocate the new point
 	PushToChild(entity);
@@ -136,4 +136,14 @@ void Quadtree::DrawQuadtree()
 int Quadtree::GetNumOfEntities()
 {
 	return entities_num;
+}
+
+void Quadtree::ResetQuadtree()
+{
+/*
+for (int i = 0; i < CHILDS_NUM; i++)
+if (node->childs[i] != nullptr)
+ResetQuadtree(node->childs[i]);
+*/
+		DELETE_PTR(origin);
 }

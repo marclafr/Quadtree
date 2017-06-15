@@ -22,6 +22,7 @@ public:
 	bool PushBack(iPoint pos);
 	void DrawQuadtree();
 	int GetNumOfEntities();
+	void ResetQuadtree();
 
 private:
 	QuadtreeNode* origin = nullptr;	
