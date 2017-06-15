@@ -42,7 +42,15 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		iPoint mouse_pos;
+		App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
+		quadtree->PushBack(mouse_pos);
+	}
+
 	quadtree->DrawQuadtree();
+	
 	return true;
 }
 

@@ -16,8 +16,6 @@
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
-	PERF_START(ptimer);
-
 	input = new j1Input();
 	win = new j1Window();
 	render = new j1Render();
@@ -39,8 +37,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(render);
-
-	PERF_PEEK(ptimer);
 }
 
 // Destructor
@@ -67,8 +63,6 @@ void j1App::AddModule(j1Module* module)
 // Called before render is available
 bool j1App::Awake()
 {
-	PERF_START(ptimer);
-
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
@@ -104,15 +98,12 @@ bool j1App::Awake()
 		}
 	}
 
-	PERF_PEEK(ptimer);
-
 	return ret;
 }
 
 // Called before the first frame
 bool j1App::Start()
 {
-	PERF_START(ptimer);
 	bool ret = true;
 	std::list<j1Module*>::iterator item = modules.begin();
 
@@ -123,8 +114,6 @@ bool j1App::Start()
 		item++;
 	}
 	startup_time.Start();
-
-	PERF_PEEK(ptimer);
 
 	return ret;
 }
