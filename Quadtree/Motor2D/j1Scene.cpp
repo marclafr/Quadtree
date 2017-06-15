@@ -49,6 +49,11 @@ bool j1Scene::Update(float dt)
 		quadtree->PushBack(mouse_pos);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		Instert50Points();
+	}
+
 	quadtree->DrawQuadtree();
 	
 	return true;
@@ -71,4 +76,29 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+uint j1Scene::GetPointsInQuadtree()
+{
+	return quadtree->GetNumOfEntities();
+}
+
+uint j1Scene::GetQTDivisions()
+{
+	return qt_divisions;
+}
+
+void j1Scene::QTSubdivision()
+{
+	qt_divisions += 3;
+}
+
+void j1Scene::Instert50Points()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		int rand_x = rand() % App->win->GetWindowWidth() - 1;
+		int rand_y = rand() % App->win->GetWindowHeight() - 1;
+		quadtree->PushBack({ rand_x, rand_y });
+	}
 }

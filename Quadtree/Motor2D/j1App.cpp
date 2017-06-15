@@ -182,20 +182,12 @@ void j1App::FinishUpdate()
 
 	float avg_fps = float(frame_count) / startup_time.ReadSec();
 	float seconds_since_startup = startup_time.ReadSec();
-	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
-			  avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
+	sprintf_s(title, 256, "Number of Points: %i Quadtree Divisions: %i         Av.FPS: %.2f Last sec frames: %i",
+			  App->scene->GetPointsInQuadtree(), App->scene->GetQTDivisions(), avg_fps, frames_on_last_update, dt);
 	App->win->SetTitle(title);
-
-	if(capped_ms > 0 && last_frame_ms < capped_ms)
-	{
-		j1PerfTimer t;
-		SDL_Delay(capped_ms - last_frame_ms);
-		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
-	}
 }
 
 // Call modules before each loop iteration

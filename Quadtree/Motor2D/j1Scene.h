@@ -35,13 +35,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	uint GetPointsInQuadtree();
+	uint GetQTDivisions();
+	void QTSubdivision();
+
 private:
 	SDL_Texture* debug_tex;
 	GuiImage* banner;
 	GuiText* text;
 
 	Quadtree* quadtree;
-
+	uint qt_divisions = 1;
+	void Instert50Points();
 };
 
 #endif // __j1SCENE_H__

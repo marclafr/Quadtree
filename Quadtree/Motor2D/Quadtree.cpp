@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "p2Defs.h"
 #include "j1Render.h"
+#include "j1Scene.h"
 #include "Quadtree.h"
 
 QuadtreeNode::QuadtreeNode(SDL_Rect area, QuadtreeNode* parent) : area(area), parent(parent)
@@ -93,6 +94,7 @@ void QuadtreeNode::SubDivide(iPoint entity)
 	childs[1] = new QuadtreeNode(top_right, this);
 	childs[2] = new QuadtreeNode(bot_left, this);
 	childs[3] = new QuadtreeNode(bot_right, this);
+	App->scene->QTSubdivision();
 
 	//Realocate all the points in the new quads
 	for (int i = 0; i < MAX_ENTITIES; i++)
@@ -120,6 +122,7 @@ bool Quadtree::PushBack(iPoint pos)
 	if (origin->IsInside(pos))
 	{
 		origin->AddEntity(pos);
+		entities_num++;
 		return true;
 	}
 	return false;
@@ -128,4 +131,9 @@ bool Quadtree::PushBack(iPoint pos)
 void Quadtree::DrawQuadtree()
 {
 	origin->DrawQuadtreeArea();
+}
+
+int Quadtree::GetNumOfEntities()
+{
+	return entities_num;
 }
