@@ -32,8 +32,7 @@ void QuadtreeNode::DrawQuadtreeArea()
 	App->render->DrawQuad(area, QUAD_COLOR, false, false);
 	//Draws Points
 	for (int i = 0; i < MAX_ENTITIES; i++)
-		//if (entities[i] != nullptr)
-			DrawEntity(entities[i]);
+		DrawEntity(&entities[i]);
 
 	//Calls children
 	for (int i = 0; i < CHILDS_NUM; i++)
@@ -49,12 +48,12 @@ bool QuadtreeNode::IsInside(const iPoint pos)
 	return false;
 }
 
-void QuadtreeNode::DrawEntity(iPoint entities)
+void QuadtreeNode::DrawEntity(const iPoint* entities)
 {
-	App->render->DrawCircle(entities.x, entities.y, 1, POINTS_COLOR, false);
+	App->render->DrawCircle(entities->x, entities->y, 1, POINTS_COLOR, false);
 }
 
-void QuadtreeNode::AddEntity(iPoint entity)
+void QuadtreeNode::AddEntity(const iPoint& entity)
 {
 	//If the quad is not subdivided
 	if (childs[0] == nullptr)
@@ -79,14 +78,14 @@ void QuadtreeNode::AddEntity(iPoint entity)
 		PushToChild(entity);
 }
 
-void QuadtreeNode::PushToChild(iPoint entity)
+void QuadtreeNode::PushToChild(const iPoint& entity)
 {
 	for (int i = 0; i < CHILDS_NUM; i++)
 		if (childs[i]->IsInside(entity))
 			childs[i]->AddEntity(entity);
 }
 
-void QuadtreeNode::SubDivide(iPoint entity)
+void QuadtreeNode::SubDivide(const iPoint entity)
 {
 	SDL_Rect top_left = { area.x,						  area.y,						 ceil(area.w / 2.0f),  ceil(area.h / 2.0f) };
 	SDL_Rect top_right = { area.x + ceil(area.w / 2.0f),  area.y,						 ceil(area.w / 2.0f),  ceil(area.h / 2.0f) };
@@ -117,7 +116,7 @@ Quadtree::~Quadtree()
 	DELETE_PTR(origin);
 }
 
-bool Quadtree::PushBack(iPoint pos)
+bool Quadtree::PushBack(const iPoint pos)
 {
 	if (origin->IsInside(pos))
 	{
@@ -138,12 +137,21 @@ int Quadtree::GetNumOfEntities()
 	return entities_num;
 }
 
-void Quadtree::ResetQuadtree()
+void Quadtree::ResetQuadtree(QuadtreeNode* node)
 {
-/*
-for (int i = 0; i < CHILDS_NUM; i++)
-if (node->childs[i] != nullptr)
-ResetQuadtree(node->childs[i]);
-*/
-		DELETE_PTR(origin);
+	for (int i = 0; i < CHILDS_NUM; i++)
+	{
+		if (node->childs[i] != nullptr)
+		{
+			ResetQuadtree(node->childs[i]);
+			node->childs[i] = nullptr;
+		}
+	}
+
+	DELETE_PTR(node);
+}
+
+QuadtreeNode * Quadtree::GetOrigin() const
+{
+	return origin;
 }

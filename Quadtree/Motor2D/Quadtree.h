@@ -7,6 +7,7 @@
 
 #define MAX_ENTITIES 3
 #define CHILDS_NUM 4
+
 #define QUAD_COLOR 0, 255, 0, 255	// R, G, B, ALPHA
 #define POINTS_COLOR 255, 255, 255, 255 // R, G, B, ALPHA
 
@@ -19,10 +20,12 @@ public:
 	Quadtree(SDL_Rect area);
 	~Quadtree();
 
-	bool PushBack(iPoint pos);
+	bool PushBack(const iPoint pos);
 	void DrawQuadtree();
 	int GetNumOfEntities();
-	void ResetQuadtree();
+	void ResetQuadtree(QuadtreeNode* node);
+
+	QuadtreeNode* GetOrigin() const;
 
 private:
 	QuadtreeNode* origin = nullptr;	
@@ -50,10 +53,10 @@ private:
 	SDL_Rect area;
 	iPoint entities[MAX_ENTITIES];
 
-	void DrawEntity(iPoint entities);
-	void AddEntity(iPoint entity);
-	void PushToChild(iPoint entity);
-	void SubDivide(iPoint entity);
+	void DrawEntity(const iPoint* entities);
+	void AddEntity(const iPoint& entity);
+	void PushToChild(const iPoint& entity);
+	void SubDivide(const iPoint entity);
 };
 
 //	\\----------------||______________________||----------------//

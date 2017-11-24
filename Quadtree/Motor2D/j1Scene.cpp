@@ -35,7 +35,6 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-
 	return true;
 }
 
@@ -49,8 +48,12 @@ bool j1Scene::Update(float dt)
 		quadtree->PushBack(mouse_pos);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		Instert50Points();	
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+	{
+		int rand_x = rand() % App->win->GetWindowWidth() - 1;
+		int rand_y = rand() % App->win->GetWindowHeight() - 1;
+		quadtree->PushBack({ rand_x, rand_y });
+	}
 
 	quadtree->DrawQuadtree();
 
@@ -64,7 +67,7 @@ bool j1Scene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
-		quadtree->ResetQuadtree();
+		quadtree->ResetQuadtree(quadtree->GetOrigin());
 		qt_divisions = 1;
 		quadtree = new Quadtree({ 0, 0, App->win->GetWindowWidth(), App->win->GetWindowHeight() });
 	}
@@ -96,14 +99,4 @@ uint j1Scene::GetQTDivisions()
 void j1Scene::QTSubdivision()
 {
 	qt_divisions += 3;
-}
-
-void j1Scene::Instert50Points()
-{
-	for (int i = 0; i < 50; i++)
-	{
-		int rand_x = rand() % App->win->GetWindowWidth() - 1;
-		int rand_y = rand() % App->win->GetWindowHeight() - 1;
-		quadtree->PushBack({ rand_x, rand_y });
-	}
 }

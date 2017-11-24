@@ -255,7 +255,6 @@ bool j1App::PostUpdate()
 // Called before quitting
 bool j1App::CleanUp()
 {
-	PERF_START(ptimer);
 	bool ret = true;
 	std::list<j1Module*>::reverse_iterator item = modules.rbegin();
 
@@ -265,8 +264,6 @@ bool j1App::CleanUp()
 			ret = (*item)->CleanUp();
 		item++;
 	}
-
-	PERF_PEEK(ptimer);
 	return ret;
 }
 
